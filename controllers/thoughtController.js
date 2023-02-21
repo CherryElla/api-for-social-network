@@ -1,6 +1,7 @@
 const {Thought, User} = require('../models')
 
 module.export = {
+    // GET /api/thoughts
     getThoughts(req, res){
         Thought.find()
         .then((thoughts)=> res.json(thoughts))
@@ -15,6 +16,7 @@ module.export = {
         )
         .catch((err) => res.status(500).json(err))
     },
+    // POST /api/thoughts
     createThought(req,res){
         Thought.create(req.body)
         .then((thought)=> {
@@ -34,4 +36,41 @@ module.export = {
             res.status(500).json(err)
         });
     },
+    // 
+    updateThought(req,res){
+        Thought.findOneAndUpdate({_id: req.params.thoughtId},
+            {new: true},
+            {runValidators: true}
+            )
+            .then((updatedThought)=>
+            !updatedThought
+            ? res.status(404).json({message: 'No thought found with that ID!'})
+            : res.json(updatedThought)
+            )
+            .catch((err)=>
+            res.status(500).json(err))
+    },
+    // DELETE /api/thoughts
+    deleteThought(req,res) {
+        Thought.findOneAndDelete({_id: req.params.thoughtId})
+        .then((deletedThought)=>
+        !deletedThought
+        ? res.status(404).json({message: 'No thought found with that ID!'})
+        : res.json(deletedThought)
+        )
+        .catch((err)=>
+        res.status(500).json(err))
+        // Delete thought from user thoughts array
+        User.findByIdAndUpdate(
+            {_id: deletedThought.userId},
+            {$pull: {thoughts: req.params.thoughtId}},
+            {new:true}
+        )
+        .then(()=>{
+            res.json({message: 'Thought deleted successfully!'})
+        }
+        )
+        .catch((err)=> res.status(500).json(err))
+    }
+    
 };
