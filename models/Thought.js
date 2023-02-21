@@ -1,4 +1,5 @@
 const {Schema, model} = require('mongoose')
+const reactionSchema = require('./Reaction')
 
 // Schema for Thought model creation
 const thoughtSchema = new Schema(
@@ -20,9 +21,31 @@ const thoughtSchema = new Schema(
             type: String,
             required: true,
         },
-        reactions: [
-            // array of nested docs created with reactionSchema
-        ]
+        reactions: [reactionSchema]
+});
+
+const reactionSchema = new Schema({
+    reactionId: {
+        type: mongoose.Schema.Types.ObjectId,
+        default: mongoose.Types.ObjectId,
+    },
+    reactionBody: {
+        type: String,
+        required: true,
+        maxlength: 280,
+    },
+    username: {
+        type: String,
+        required: true,
+    },
+    createdAt: {
+        type: Date,
+        required: true,
+        default: Date.now,
+        get: function(value) {
+            return new Date(value).toLocaleString()
+        }
+    },
 });
 
 // Virtual that retrieves the length of the thoughts reactions array field on query
