@@ -36,7 +36,7 @@ module.export = {
             res.status(500).json(err)
         });
     },
-    // 
+    // PUT /api/thoughts/:thoughtId
     updateThought(req,res){
         Thought.findOneAndUpdate({_id: req.params.thoughtId},
             {new: true},
@@ -50,7 +50,7 @@ module.export = {
             .catch((err)=>
             res.status(500).json(err))
     },
-    // DELETE /api/thoughts
+    // DELETE /api/thoughts/:thoughtId
     deleteThought(req,res) {
         Thought.findOneAndDelete({_id: req.params.thoughtId})
         .then((deletedThought)=>

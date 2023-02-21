@@ -5,7 +5,7 @@ const {
   createUser,
 } = require('../../controllers/userController');
 
-// GET POST /api/users
+// GET & POST /api/users
 router.route('/').get(getUsers).post(createUser);
 
 // GET /api/users/:userId
