@@ -15,4 +15,10 @@ module.exports = {
         : res.json(user)
         )
         .catch((err)=> res.status(500).json(err))
-}}
+},
+createUser(req,res){
+    User.create(req.body)
+    .then((dbUserData)=> res.json(dbUserData))
+    .catch((err)=> res.status(500).json(err))
+}
+}
