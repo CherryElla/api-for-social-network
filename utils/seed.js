@@ -14,13 +14,12 @@ connection.once('open', async () => {
 
   for (let i = 0; i < 20; i++) {
     const fullName = getRandomName();
-    const first = fullName.split(' ')[0];
-    const last = fullName.split(' ')[1];
+    const first = fullName.split(' ')[0] + `${Math.floor(Math.random()* (100))}`;
+    const email = fullName.split(" ")[1] + `${Math.floor(Math.random()* (100))}` + '@gmail.com' 
 
     users.push({
-      first,
-      last,
-      age: Math.floor(Math.random() * (99 - 18 + 1) + 18),
+      username: first,
+      email: email,
     });
   }
 
