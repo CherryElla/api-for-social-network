@@ -1,7 +1,7 @@
 const { Thought} = require('../models')
 
 // POST /api/thoughts/:thoughtId/reactions
-module.export = {
+module.exports = {
     createReaction(req,res) {
         const {reactionBody, username} = req.body
         Thought.findByIdAndUpdate(
@@ -16,11 +16,9 @@ module.export = {
             )
             .catch((err)=>
             res.status(500).json(err))
-    }
-}
+    },
 
 // DELETE /api/thoughts/:thoughtId/reactions/:reactionId
-module.exports = {
     deleteReaction(req,res) {
         Thought.findByIdAndDelete(
             req.params.thoughtId,

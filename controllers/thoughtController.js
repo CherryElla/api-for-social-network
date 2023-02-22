@@ -1,6 +1,6 @@
 const {Thought, User} = require('../models')
 
-module.export = {
+module.exports = {
     // GET /api/thoughts
     getThoughts(req, res){
         Thought.find()
@@ -39,8 +39,8 @@ module.export = {
     // PUT /api/thoughts/:thoughtId
     updateThought(req,res){
         Thought.findOneAndUpdate({_id: req.params.thoughtId},
-            {new: true},
-            {runValidators: true}
+            {$set: req.body},
+            {new: true, runValidators: true}
             )
             .then((updatedThought)=>
             !updatedThought

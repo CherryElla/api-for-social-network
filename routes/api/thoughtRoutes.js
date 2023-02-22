@@ -1,13 +1,18 @@
 const router = require('express').Router();
+
 const {
   getThoughts,
   getSingleThought,
   createThought,
+  updateThought,
+  deleteThought,
+} = require('../../controllers/thoughtController')
+
+const {
   createReaction,
   deleteReaction,
-  updateThought,
-  deleteThought
-} = require('../../controllers/userController');
+} = require('../../controllers/reactionController')
+
 
 // GET & POST /api/thoughts
 router.route('/').get(getThoughts).post(createThought);
@@ -32,5 +37,3 @@ module.exports = router
 
 
 
-
-module.exports = router;

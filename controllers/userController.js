@@ -24,4 +24,35 @@ module.exports = {
             .then((dbUserData) => res.json(dbUserData))
             .catch((err) => res.status(500).json(err));
     },
+    // PUT /api/users/:userId
+    updateUser(req,res){
+        User.findOneAndUpdate({_id: req.params.userId},
+            {$set: req.body},
+            {new: true, runValidators: true}
+            )
+            .then((updatedUser)=>
+            !updatedUser
+            ? res.status(404).json({message: 'No user found with that ID!'})
+            : res.json(updatedUser)
+            )
+            .catch((err)=>
+            res.status(500).json(err))
+    },
+    // DELETE /api/users/:userId
+    deleteUser(req,res) {
+        User.findOneAndDelete({_id: req.params.userId})
+        .then((deletedUser)=>
+        !deletedUser
+        ? res.status(404).json({message: 'No user found with that ID!'})
+        : res.json(deletedUser)
+        )
+        .catch((err)=>
+        res.status(500).json(err)
+        )
+        .then(()=>{
+            res.json({message: 'User deleted successfully!'})
+        }
+        )
+        .catch((err)=> res.status(500).json(err))
+    }
 };
