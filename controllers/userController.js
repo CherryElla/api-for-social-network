@@ -70,6 +70,7 @@ module.exports = {
         })
         .catch((err)=> res.status(500).json(err))
     },
+    
     // DELETE /api/users/:userId/friends/:friendId
     removeFriend(req,res){
         User.findOneAndUpdate(

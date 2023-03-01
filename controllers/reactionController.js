@@ -20,15 +20,16 @@ module.exports = {
 
 // DELETE /api/thoughts/:thoughtId/reactions/:reactionId
     deleteReaction(req,res) {
-        Thought.findByIdAndDelete(
-            req.params.thoughtId,
+        Thought.findOneAndUpdate(
+            {_id: req.params.thoughtId},
             {$pull: {reactions: {reactionId: req.params.reactionId}}},
             {new: true}
         )
-        .then((deletedThought)=> 
-        ! deletedThought
+        .then((deletedReaction)=> {
+        console.log(deletedReaction)
+        !deletedReaction
         ? res.status(404).json({message: 'No thought found with that ID!'})
-        : res.json(deletedThought)
+        : res.json(deletedReaction)}
         )
         .catch((err)=> res.status(500).json(err))
     }

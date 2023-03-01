@@ -16,11 +16,12 @@ module.exports = {
         )
         .catch((err) => res.status(500).json(err))
     },
+
     // POST /api/users/:userId/thoughts/
     createThought(req,res){
         User.findOneAndUpdate(
             {_id: req.params.userId},
-            {$addToSet: {thoughts: req.params.friendId}},
+            {$addToSet: {thoughts: req.params.thoughtId}},
             {new: true}
         )
         .then((user)=>
@@ -38,7 +39,7 @@ module.exports = {
         Thought.findOneAndUpdate(
             {_id: req.params.thoughtId},
             {$set: req.body},
-            {new: true, runValidators: true}
+            {new: true}
             )
             .then((updatedThought)=>
             !updatedThought
@@ -50,24 +51,17 @@ module.exports = {
     },
     // DELETE /api/thoughts/:thoughtId
     deleteThought(req,res) {
-        Thought.findOneAndDelete({_id: req.params.thoughtId})
-        .then((deletedThought)=>
-        !deletedThought
+        Thought.findOneAndUpdate(
+            {_id: req.params.thoughtId},
+            {$pull: {thoughts: {thoughtId: req.params.thoughtId}}},
+            {new: true}
+        )
+        .then((thought)=> {
+        !thought
         ? res.status(404).json({message: 'No thought found with that ID!'})
-        : res.json(deletedThought)
+        : res.json(thought)}
         )
-        .catch((err)=>
-        res.status(500).json(err))
-        // Delete thought from user thoughts array
-        User.findByIdAndUpdate(
-            {_id: deletedThought.userId},
-            {$pull: {thoughts: req.params.thoughtId}},
-            {new:true}
-        )
-        .then(()=>{
-            res.json({message: 'Thought deleted successfully!'})
-        }
-        )
+
         .catch((err)=> res.status(500).json(err))
     }
     
