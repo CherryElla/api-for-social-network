@@ -29,9 +29,8 @@ Once you have your code editor up and running you can follow the steps below to 
 `$ npm install --save-dev nodemon`
 
 ### Running
-Now that you have your environment set up, you can use the following commands to seed the database, and start the server:
+Now that you have your environment set up, you can use the following command to start the server:
 
-`$ npm run seed`
 `$ npm run dev`
 
 Next, using your API testing platform of choice (I have linked below two popular platforms) go ahead and test your endpoints! 
