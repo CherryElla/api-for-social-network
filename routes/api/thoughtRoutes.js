@@ -15,13 +15,13 @@ const {
 
 
 // GET & POST /api/thoughts
-router.route('/').get(getThoughts).post(createThought);
+router.route('/').get(getThoughts);
 
-// GET /api/users/:userId
-router.route('/:userId').get(getSingleThought)
+// POST /api/user/:userId/thoughts
+// router.route('/:userId/thoughts/').post(createThought)
 
-// PUT & DELETE /api/thoughts/:thoughtId
-router.route('/thoughts/:thoughtId').put(updateThought).delete(deleteThought)
+// GET & PUT & DELETE /api/thoughts/:thoughtId
+router.route('/:thoughtId').get(getSingleThought).put(updateThought).delete(deleteThought)
 
 // POST /api/thoughts/:thoughtId/reactions
 router.route('/:thoughtId/reactions').post(createReaction)

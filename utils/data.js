@@ -1,3 +1,18 @@
+const Lorem = require('lorem-ipsum').LoremIpsum;
+
+const loremIp = new Lorem({
+  sentencesPerParagraph: {
+    max:2,
+    min: 1
+  },
+  wordsPerSentence: {
+    max: 9,
+    min: 4
+  }
+})
+
+
+
 const names = [
     'Aaran',
     'Aaren',
@@ -922,4 +937,5 @@ const users = [];
 const getNamePart = () => names[Math.floor(Math.random() * names.length)];
 const getRandomName = () => `${getNamePart()} ${getNamePart()}`;
 
-module.exports = getRandomName;
+
+module.exports = {getRandomName, loremIp};

@@ -16,16 +16,13 @@ module.exports = {
         )
         .catch((err) => res.status(500).json(err))
     },
-    // POST /api/thoughts
+    // POST /api/users/:userId/thoughts/
     createThought(req,res){
-        Thought.create(req.body)
-        .then((thought)=> {
-            return User.findOneAndUpdate(
-                {_id: req.body.userId},
-                {$addToSet: { thoughts: thought._id}},
-                {new: true}
-            );
-        })
+        User.findOneAndUpdate(
+            {_id: req.params.userId},
+            {$addToSet: {thoughts: req.params.friendId}},
+            {new: true}
+        )
         .then((user)=>
         !user
         ? res.status(404).json({message: 'Thought created but no user found!'})
@@ -38,7 +35,8 @@ module.exports = {
     },
     // PUT /api/thoughts/:thoughtId
     updateThought(req,res){
-        Thought.findOneAndUpdate({_id: req.params.thoughtId},
+        Thought.findOneAndUpdate(
+            {_id: req.params.thoughtId},
             {$set: req.body},
             {new: true, runValidators: true}
             )

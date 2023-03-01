@@ -1,8 +1,18 @@
 const connection = require('../config/connection');
 const { Thought, User } = require('../models');
-const getRandomName = require('./data');
+const {getRandomName, loremIp} = require('./data');
 
-console.log(getRandomName());
+// console.log(getRandomName());
+// console.log(loremIp.generateSentences(1))
+const addThought = async (user)=> {
+  const thought = await Thought.create({
+    thoughtText: loremIp.generateSentences(1),
+    username: user.username
+  })
+  // return await Thought.collection.insertOne(thought)
+  return thought
+}
+
 connection.on('error', (err) => err);
 
 connection.once('open', async () => {
@@ -16,14 +26,35 @@ connection.once('open', async () => {
     const fullName = getRandomName();
     const first = fullName.split(' ')[0] + `${Math.floor(Math.random()* (100))}`;
     const email = fullName.split(" ")[1] + `${Math.floor(Math.random()* (100))}` + '@gmail.com' 
-
-    users.push({
+    const user = await User.create({
       username: first,
-      email: email,
-    });
+      email: email, 
+      thoughts: [],
+      friends: []
+    })
+    const thought = await addThought(user)
+    user.thoughts.push(thought._id)
+    user.save()
+    console.log(thought)
+    users.push(user);
+  }
+  for (let user of users){
+    let numFriends = Math.floor(Math.random()* 15 + 5)
+    for (let i = 0; i < numFriends; i ++){
+      let randFriendIdx = Math.floor(Math.random() * users.length)
+      let friend = users[randFriendIdx]
+      if(friend._id === user._id){
+        randFriendIdx = randFriendIdx + 1
+        if (randFriendIdx >= users.length) {
+          randFriendIdx = randFriendIdx - 2
+        }
+        friend = users[randFriendIdx]
+      }         
+      user.friends.push(friend._id)
+    }
+    user.save()
   }
 
-  await User.collection.insertMany(users);
-  console.log(users);
   process.exit(0);
+
 });
