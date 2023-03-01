@@ -17,8 +17,8 @@ const {
 // GET & POST /api/thoughts
 router.route('/').get(getThoughts);
 
-// POST /api/user/:userId/thoughts
-router.route('/:userId/thoughts/').post(createThought)
+// POST /api/thoughts/:userId/
+router.route('/:userId').post(createThought)
 
 // GET & PUT & DELETE /api/thoughts/:thoughtId
 router.route('/:thoughtId').get(getSingleThought).put(updateThought).delete(deleteThought)
