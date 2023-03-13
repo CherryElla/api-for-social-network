@@ -1,6 +1,9 @@
 # SOCIAL NETWORK API - with Express.js, MongoDB, and Mongoose.
 Welcome to my API for your social network, where users can share their thoughts, react to friend's thoughts, and create a friend list!
 
+[Social Network API.webm](https://user-images.githubusercontent.com/111384784/222289743-f294bc66-db68-4db7-a6a8-6641a5f545fd.webm)
+
+
 ## Getting Started
 Please follow these instructions to get your copy of the project and get it running on your local machine so you can view or debug before use.
 
