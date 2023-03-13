@@ -1,8 +1,6 @@
 # SOCIAL NETWORK API - with Express.js, MongoDB, and Mongoose.
 Welcome to my API for your social network, where users can share their thoughts, react to friend's thoughts, and create a friend list!
 
-<iframe src="https://drive.google.com/file/d/1f7eacDLE2jfXgv37AEminAtLTW7eyDTT/preview" width="640" height="480"></iframe>
-
 ## Getting Started
 Please follow these instructions to get your copy of the project and get it running on your local machine so you can view or debug before use.
 
